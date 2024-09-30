@@ -19,10 +19,7 @@ const Page = () => {
         </header>
       </div>
 
-      <BackgroundLines
-        className="container relative h-[40rem] mx-auto"
-        id="home"
-      >
+      <BackgroundLines className="container relative h-[40rem] mx-auto">
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
         <div className="flex h-full flex-col items-center justify-center">
           <h1 className="z-10 max-w-[30rem] text-center text-3xl font-extrabold md:text-5xl md:leading-tight">
