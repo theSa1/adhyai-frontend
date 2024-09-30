@@ -12,7 +12,7 @@ export const UploadinFile = ({
   onCompleted: () => void;
 }) => {
   const [selectedCourse] = useRecoilState(selectedCourseState);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [, setUploadProgress] = useState<number>(0);
   const upload = async () => {
     if (!file) return;
 
@@ -25,7 +25,7 @@ export const UploadinFile = ({
     });
 
     await axios.post(
-      "http://localhost:3000/document/upload",
+      import.meta.env.VITE_API_BASE + "/document/upload",
       {
         name: file.name,
         content: base64,

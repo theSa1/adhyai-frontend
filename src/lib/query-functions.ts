@@ -1,5 +1,5 @@
 export const getCourses = async () => {
-  const res = await fetch("http://localhost:3000/course/get", {
+  const res = await fetch(import.meta.env.VITE_API_BASE + "/course/get", {
     credentials: "include",
   });
   const data: {
@@ -18,7 +18,7 @@ export const getCourses = async () => {
 };
 
 export const addCourse = async ({ name }: { name: string }) => {
-  const res = await fetch("http://localhost:3000/course/add", {
+  const res = await fetch(import.meta.env.VITE_API_BASE + "/course/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const addCourse = async ({ name }: { name: string }) => {
 
 export const getFiles = async ({ courseId }: { courseId: string }) => {
   const res = await fetch(
-    `http://localhost:3000/document/get?courseId=${courseId}`,
+    import.meta.env.VITE_API_BASE + `/document/get?courseId=${courseId}`,
     { credentials: "include" }
   );
   const data: {
@@ -52,7 +52,7 @@ export const getFiles = async ({ courseId }: { courseId: string }) => {
 
 export const getQuizzes = async ({ courseId }: { courseId: string }) => {
   const res = await fetch(
-    `http://localhost:3000/quiz/get-all?courseId=${courseId}`,
+    import.meta.env.VITE_API_BASE + `/quiz/get-all?courseId=${courseId}`,
     { credentials: "include" }
   );
   const data: {
@@ -73,9 +73,12 @@ export const getQuizzes = async ({ courseId }: { courseId: string }) => {
 };
 
 export const getQuiz = async ({ quizId }: { quizId: string }) => {
-  const res = await fetch(`http://localhost:3000/quiz/get?quizId=${quizId}`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    import.meta.env.VITE_API_BASE + `/quiz/get?quizId=${quizId}`,
+    {
+      credentials: "include",
+    }
+  );
   const data: {
     success: boolean;
     data: {
@@ -112,7 +115,7 @@ export const submitQuiz = async ({
   quizId: string;
   answers: string[];
 }) => {
-  const res = await fetch(`http://localhost:3000/quiz/submit`, {
+  const res = await fetch(import.meta.env.VITE_API_BASE + `/quiz/submit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

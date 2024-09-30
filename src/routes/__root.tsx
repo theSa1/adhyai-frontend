@@ -6,8 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RecoilRoot } from "recoil";
 import { ClerkProvider } from "@clerk/clerk-react";
 
-const PUBLISHABLE_KEY =
-  "pk_test_bGlnaHQtdGVycmFwaW4tODUuY2xlcmsuYWNjb3VudHMuZGV2JA";
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -22,7 +21,7 @@ const RootComponent = () => {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Outlet />
-            <TanStackRouterDevtools position="bottom-right" />
+            {import.meta.env.DEV && <TanStackRouterDevtools />}
           </TooltipProvider>
         </QueryClientProvider>
       </RecoilRoot>

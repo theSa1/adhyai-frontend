@@ -1,4 +1,5 @@
 import { Logo } from "@/components/logo";
+import { BackgroundLines } from "@/components/ui/background-lines";
 import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
@@ -18,8 +19,8 @@ const Page = () => {
         </header>
       </div>
 
-      <section
-        className="bg-dot-black/30 container relative h-[40rem] mx-auto"
+      <BackgroundLines
+        className="container relative h-[40rem] mx-auto"
         id="home"
       >
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
@@ -44,7 +45,7 @@ const Page = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </BackgroundLines>
 
       <section className="container px-5 pb-5 mx-auto" id="about">
         <div className="grid place-items-center gap-10 rounded border bg-primary-foreground px-5 py-10 lg:grid-cols-1 lg:px-10">

@@ -18,7 +18,7 @@ const Page = () => {
     isLoading,
     setMessages,
   } = useChat({
-    api: "http://localhost:3000/chat/send",
+    api: import.meta.env.VITE_API_BASE + "/chat/send",
     body: {
       courseId: selectedCourse!,
     },
@@ -45,7 +45,6 @@ const Page = () => {
   }, [messages]);
 
   useEffect(() => {
-    console.log(messagesStatee);
     if (
       messages.length === 0 &&
       (messagesStatee[selectedCourse!]?.length ?? 0) > 0

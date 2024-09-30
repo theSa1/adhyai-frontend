@@ -9,8 +9,6 @@ import { useRecoilState } from "recoil";
 export const Page = () => {
   const [selectedCourse] = useRecoilState(selectedCourseState);
 
-  console.log(selectedCourse);
-
   return (
     <div className="gap-3 flex py-4 flex-col justify-end w-[42rem] mx-auto pt-20">
       <div className="relative">
