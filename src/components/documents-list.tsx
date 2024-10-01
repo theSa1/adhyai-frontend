@@ -9,11 +9,13 @@ import { selectedCourseState } from "@/lib/state";
 import { getFiles } from "@/lib/query-functions";
 import { useDropzone } from "react-dropzone";
 import { nanoid } from "nanoid";
+import { useAuth } from "@clerk/clerk-react";
 
 const fileTypes = ["PDF"];
 
 export const DocumentList = () => {
   const [selectedCourse] = useRecoilState(selectedCourseState);
+  const { getToken } = useAuth();
   const [uploadingFiles, setUploadingFiles] = useState<
     {
       id: string;
@@ -22,7 +24,7 @@ export const DocumentList = () => {
   >([]);
   const filesQuery = useQuery({
     queryKey: ["files", selectedCourse],
-    queryFn: () => getFiles({ courseId: selectedCourse! }),
+    queryFn: () => getFiles({ courseId: selectedCourse!, getToken }),
   });
 
   const onDrop = useCallback(async (files: File[]) => {

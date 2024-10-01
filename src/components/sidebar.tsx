@@ -16,15 +16,17 @@ import { getCourses } from "@/lib/query-functions";
 import { useRecoilState } from "recoil";
 import { selectedCourseState } from "@/lib/state";
 import { Logo } from "./logo";
+import { useAuth } from "@clerk/clerk-react";
 
 export const Sidebar = () => {
   const [isAddCourseDialogOpen, setIsAddCourseDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] =
     useRecoilState(selectedCourseState);
+  const { getToken } = useAuth();
 
   const coursesQuery = useQuery({
     queryKey: ["get-courses"],
-    queryFn: getCourses,
+    queryFn: () => getCourses({ getToken }),
   });
 
   return (

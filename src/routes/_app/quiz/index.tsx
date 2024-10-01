@@ -1,8 +1,5 @@
 import { QuizList } from "@/components/quiz-list";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { getQuizzes } from "@/lib/query-functions";
 import { selectedCourseState } from "@/lib/state";
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRecoilState } from "recoil";
 

@@ -3,11 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@clerk/clerk-react";
 
 export const QuizList = ({ selectedCourse }: { selectedCourse: string }) => {
+  const { getToken } = useAuth();
   const quizzesQuery = useQuery({
     queryKey: ["quizzes", selectedCourse],
-    queryFn: () => getQuizzes({ courseId: selectedCourse! }),
+    queryFn: () => getQuizzes({ courseId: selectedCourse!, getToken }),
   });
 
   return (

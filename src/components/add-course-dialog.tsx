@@ -13,6 +13,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { addCourse, getCourses } from "@/lib/query-functions";
 import { useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 export const AddCourseDialog = ({
   isOpen,
@@ -21,6 +22,7 @@ export const AddCourseDialog = ({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) => {
+  const { getToken } = useAuth();
   const [name, setName] = useState("");
   const addCourseMutation = useMutation({
     mutationFn: addCourse,
@@ -56,7 +58,7 @@ export const AddCourseDialog = ({
           <Button
             type="submit"
             onClick={() => {
-              addCourseMutation.mutate({ name });
+              addCourseMutation.mutate({ name, getToken });
             }}
             disabled={addCourseMutation.isPending}
           >

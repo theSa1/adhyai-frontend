@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { getQuiz, submitQuiz } from "@/lib/query-functions";
+import { useAuth } from "@clerk/clerk-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangleIcon } from "lucide-react";
@@ -20,9 +21,10 @@ import { z } from "zod";
 const Page = () => {
   const { quizId } = Route.useParams();
   const [error, setError] = useState<string | null>(null);
+  const { getToken } = useAuth();
   const quizQuery = useQuery({
     queryKey: ["quiz", quizId],
-    queryFn: () => getQuiz({ quizId }),
+    queryFn: () => getQuiz({ quizId, getToken }),
   });
 
   const submitQuizMutation = useMutation({
@@ -82,6 +84,7 @@ const Page = () => {
                   submitQuizMutation.mutate({
                     quizId,
                     answers: answers.map((a) => z.string().parse(a)),
+                    getToken,
                   });
                   quizQuery.refetch();
                 }}

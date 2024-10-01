@@ -1,6 +1,10 @@
-export const getCourses = async () => {
+type GetToken = () => Promise<string | null>;
+
+export const getCourses = async ({ getToken }: { getToken: GetToken }) => {
   const res = await fetch(import.meta.env.VITE_API_BASE + "/course/get", {
-    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${await getToken()}`,
+    },
   });
   const data: {
     success: boolean;
@@ -11,29 +15,45 @@ export const getCourses = async () => {
   } = await res.json();
 
   if (!data.success) {
-    throw new Error("An error occured");
+    throw new Error("An error occurred");
   }
 
   return data.data;
 };
 
-export const addCourse = async ({ name }: { name: string }) => {
+export const addCourse = async ({
+  name,
+  getToken,
+}: {
+  name: string;
+  getToken: GetToken;
+}) => {
   const res = await fetch(import.meta.env.VITE_API_BASE + "/course/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${await getToken()}`,
     },
     body: JSON.stringify({ name }),
-    credentials: "include",
   });
 
   return res.json();
 };
 
-export const getFiles = async ({ courseId }: { courseId: string }) => {
+export const getFiles = async ({
+  courseId,
+  getToken,
+}: {
+  courseId: string;
+  getToken: GetToken;
+}) => {
   const res = await fetch(
     import.meta.env.VITE_API_BASE + `/document/get?courseId=${courseId}`,
-    { credentials: "include" }
+    {
+      headers: {
+        Authorization: `Bearer ${await getToken()}`,
+      },
+    }
   );
   const data: {
     success: boolean;
@@ -44,16 +64,26 @@ export const getFiles = async ({ courseId }: { courseId: string }) => {
   } = await res.json();
 
   if (!data.success) {
-    throw new Error("An error occured");
+    throw new Error("An error occurred");
   }
 
   return data.data;
 };
 
-export const getQuizzes = async ({ courseId }: { courseId: string }) => {
+export const getQuizzes = async ({
+  courseId,
+  getToken,
+}: {
+  courseId: string;
+  getToken: GetToken;
+}) => {
   const res = await fetch(
     import.meta.env.VITE_API_BASE + `/quiz/get-all?courseId=${courseId}`,
-    { credentials: "include" }
+    {
+      headers: {
+        Authorization: `Bearer ${await getToken()}`,
+      },
+    }
   );
   const data: {
     success: boolean;
@@ -66,17 +96,25 @@ export const getQuizzes = async ({ courseId }: { courseId: string }) => {
   } = await res.json();
 
   if (!data.success) {
-    throw new Error("An error occured");
+    throw new Error("An error occurred");
   }
 
   return data.data;
 };
 
-export const getQuiz = async ({ quizId }: { quizId: string }) => {
+export const getQuiz = async ({
+  quizId,
+  getToken,
+}: {
+  quizId: string;
+  getToken: GetToken;
+}) => {
   const res = await fetch(
     import.meta.env.VITE_API_BASE + `/quiz/get?quizId=${quizId}`,
     {
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${await getToken()}`,
+      },
     }
   );
   const data: {
@@ -102,7 +140,7 @@ export const getQuiz = async ({ quizId }: { quizId: string }) => {
   } = await res.json();
 
   if (!data.success) {
-    throw new Error("An error occured");
+    throw new Error("An error occurred");
   }
 
   return data.data;
@@ -111,17 +149,19 @@ export const getQuiz = async ({ quizId }: { quizId: string }) => {
 export const submitQuiz = async ({
   quizId,
   answers,
+  getToken,
 }: {
   quizId: string;
   answers: string[];
+  getToken: GetToken;
 }) => {
   const res = await fetch(import.meta.env.VITE_API_BASE + `/quiz/submit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${await getToken()}`,
     },
     body: JSON.stringify({ quizId, answers }),
-    credentials: "include",
   });
 
   return res.json();
