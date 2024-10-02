@@ -1,5 +1,3 @@
-import { FileText, Upload } from "lucide-react";
-import { Label } from "./ui/label";
 import {
   Select,
   SelectContent,
@@ -7,11 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { AddCourseDialog } from "./add-course-dialog";
 import { DocumentList } from "./documents-list";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getCourses } from "@/lib/query-functions";
 import { useRecoilState } from "recoil";
 import { selectedCourseState } from "@/lib/state";
@@ -50,9 +47,18 @@ export const Sidebar = () => {
           value={selectedCourse}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select a course" />
+            <SelectValue
+              placeholder={
+                coursesQuery.isLoading ? "Loading..." : "Select a course"
+              }
+            />
           </SelectTrigger>
           <SelectContent>
+            {coursesQuery.data?.length === 0 && (
+              <SelectItem disabled value="">
+                No courses available
+              </SelectItem>
+            )}
             {coursesQuery.data?.map((course) => (
               <SelectItem value={course.id} key={course.id}>
                 {course.name}
