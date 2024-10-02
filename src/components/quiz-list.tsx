@@ -22,6 +22,13 @@ export const QuizList = ({ selectedCourse }: { selectedCourse: string }) => {
       {quizzesQuery.isError && <p>Error</p>}
       {quizzesQuery.isSuccess && (
         <div className="grid gap-3 mt-4">
+          {quizzesQuery.data.length === 0 && (
+            <p className="text-foreground/70 text-sm text-center">
+              No quizzes available
+              <br />
+              To start a quiz, ask adhyai in chat. i.e. Start a quiz on "topic"
+            </p>
+          )}
           {quizzesQuery.data?.map((quiz) => (
             <Link key={quiz.id} to="/quiz/$quizId" params={{ quizId: quiz.id }}>
               <Card>

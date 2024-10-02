@@ -32,6 +32,7 @@ const Page = () => {
   });
 
   const [answers, setAnswers] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="gap-3 flex py-4 flex-col justify-end w-[42rem] mx-auto pt-20">
@@ -81,12 +82,19 @@ const Page = () => {
                     setError("Please answer all questions");
                     return;
                   }
-                  submitQuizMutation.mutate({
-                    quizId,
-                    answers: answers.map((a) => z.string().parse(a)),
-                    getToken,
-                  });
-                  quizQuery.refetch();
+                  setError(null);
+                  setIsLoading(true);
+                  submitQuizMutation
+                    .mutateAsync({
+                      quizId,
+                      answers: answers.map((a) => z.string().parse(a)),
+                      getToken,
+                    })
+                    .then(() => {
+                      quizQuery.refetch().then(() => {
+                        setIsLoading(false);
+                      });
+                    });
                 }}
                 disabled={submitQuizMutation.isPending}
               >
