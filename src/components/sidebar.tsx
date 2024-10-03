@@ -49,16 +49,15 @@ export const Sidebar = () => {
           <SelectTrigger>
             <SelectValue
               placeholder={
-                coursesQuery.isLoading ? "Loading..." : "Select a course"
+                coursesQuery.isLoading
+                  ? "Loading..."
+                  : coursesQuery.data?.length === 0
+                    ? "No Courses!"
+                    : "Select a course"
               }
             />
           </SelectTrigger>
           <SelectContent>
-            {coursesQuery.data?.length === 0 && (
-              <SelectItem disabled value="">
-                No courses available
-              </SelectItem>
-            )}
             {coursesQuery.data?.map((course) => (
               <SelectItem value={course.id} key={course.id}>
                 {course.name}
