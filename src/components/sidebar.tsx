@@ -44,7 +44,7 @@ export const Sidebar = () => {
               setSelectedCourse(v);
             }
           }}
-          value={selectedCourse}
+          value={coursesQuery.isLoading ? undefined : selectedCourse}
         >
           <SelectTrigger>
             <SelectValue
